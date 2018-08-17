@@ -1,2 +1,2 @@
 # RAD-CreateCamp
-RAD's creation at create camp
+KRAD-JJ's creation at create camp
