@@ -4,7 +4,9 @@
   "description": "KRAD-JJ's creation at create camp",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "heroku-postbuild": "cd client/client && npm install && npm run build"
   },
   "repository": {
     "type": "git",
@@ -18,8 +20,6 @@
   "homepage": "https://github.com/SavingPrivateRyan/RAD-CreateCamp#readme",
   "dependencies": {
     "express": "^4.16.3"
-  },
-  "scripts" : {
-  "start": "node server.js"}
+  }
 
 }
