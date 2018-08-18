@@ -18,5 +18,8 @@
   "homepage": "https://github.com/SavingPrivateRyan/RAD-CreateCamp#readme",
   "dependencies": {
     "express": "^4.16.3"
-  }
+  },
+  "scripts" : {
+  "start": "node server.js"}
+
 }
