@@ -3,6 +3,13 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+  state = {mesh: {}}
+
+  componentDidMount() {
+    fetch('/mesh?lat=4&long=2')
+      .then(res => res.json())
+      .then(mesh => this.setState({ mesh }));
+  }
   render() {
     return (
       <div className="App">
@@ -10,7 +17,7 @@ class App extends Component {
           <title>Meshblock Analysis</title>
         </header>
         <p className="App-intro">
-          Hello World
+          {this.state.mesh.numberOfFamilies}
         </p>
       </div>
     );
