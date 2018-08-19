@@ -14,43 +14,19 @@ app.get('/mesh', (req, res) => {
 	console.log(req.query)
 	if (req.query.lat == 4){
 		const meshblock = "MB 1021000"
-		console.log(returnObj(meshblock))
-		res.json(meshblock)
+		var returnObject = returnObj(meshblock);
+		console.log("retjurn obj", returnObject[0]);
+		res.json(returnObject[0])
+	}
+	else {
+		res.json({"numberOfFamilies": "3"})
 	}
 })
 
-app.listen(process.env.PORT || 3000)
+app.listen(process.env.PORT || 3001)
 
 
 function returnObj(meshblock) {
 	const ret = census.filter(x => x.meshblockCode == meshblock)
 	return ret;
 }
-
-
-// function searchMeshblock(meshblockCode) {
-
-// }
-
-// const csvFilePath = 'C:/Users/Ryan/Documents/GitHub/RAD-CreateCamp/server/csv-file/test.csv';
-// const csv = require('csvtojson')
-//
-//
-//
-// const printJSON = () =>{
-//   csv()
-//
-//   .fromFile(csvFilePath)
-//   .then((jsonObj) =>{
-//
-//     console.log(jsonObj);
-//   })
-//
-// }
-//
-// printJSON();
-
-// const jsonArray=await csv().fromFile(csvFilePath);
-//
-//
-// console.log(jsonArray());
