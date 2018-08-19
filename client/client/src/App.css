@@ -37,6 +37,8 @@
 
 .circleCentral {
   text-align: center;
+  display: flex;
+  margin-bottom: 50px
 }
 
 .circle {
@@ -46,8 +48,25 @@
     border-radius:250px;
     font-size:50px;
     color:#fff;
-    line-height:300px;
     text-align:center;
     background: #dd5d28;
     margin-left: 50px;
     }
+
+.centered {
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+.margin-bottom-small{
+  margin-bottom: 50px;
+}
+
+.mapCentered{
+  display: block !important;
+  margin: 0 auto !important;
+}
+
+.smalltext{
+  font-size: 20px
+}

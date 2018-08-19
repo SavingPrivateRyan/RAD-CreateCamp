@@ -12,10 +12,6 @@ class App extends Component {
   componentDidMount() {
     window.addEventListener("resize", this._resize.bind(this));
     this._resize();
-
-    fetch('/mesh?lat=6&long=7')
-      .then(res => res.json())
-      .then(mesh => this.setState({ mesh }));
   }
 
   state = {
@@ -24,16 +20,16 @@ class App extends Component {
       height: 400,
       latitude: 37.7577,
       longitude: -122.4376,
-      zoom: 8
+      zoom: 15
     },
-    mesh:{}
+    mesh: {}
   };
 
   mapRef = React.createRef();
 
   _resize() {
     this._onViewportChange({
-      width: window.innerWidth/2,
+      width: window.innerWidth * 0.98,
       height: 500
     })
   }
@@ -42,41 +38,78 @@ class App extends Component {
     this.setState({
       viewport: { ...this.state.viewport, ...viewport }
     });
+
+    if (this.state.viewport.longitude > 172 & this.state.viewport.longitude < 180) {
+      fetch('/mesh?lat=4&long=7')
+      .then(res => res.json())
+      .then(mesh => this.setState({ mesh }));
+    }
   };
+
+  renderData() {
+    if (Object.keys(this.state.mesh).length !== 0) {
+      return (
+        <div>
+          <div>
+        <h2 className="centered">Statistics about meshblock</h2>
+        </div>
+        <div className="circleCentral centered">
+      <div className="circle centered">
+        <div>
+          {this.state.mesh.numberOfFamilies}
+          <div className="smalltext">
+            Total number of families
+        </div>
+        </div>
+      </div>
+      <div className="circle centered">
+        <div>
+          {this.state.mesh.couplesNoChildren}
+          <div className="smalltext">
+            Total number of couples with no children
+        </div>
+        </div>
+      </div>
+      <div className="circle centered">
+        <div>
+          {this.state.mesh.couplesWithChildren}
+          <div className="smalltext">
+            Total number of couples with children
+        </div>
+        </div>
+      </div>
+    </div>
+    </div>)
+    }
+  }
 
   render() {
     return (
       <div>
-      <header className="App-header">
-        <img src = {logo} className = "App-logo" alt="logo" />
-        <img src = {meshdname} className = "App-logo" alt="logo" />
-        <title>Meshblock Analysis</title>
-      </header>
-    <p className="App-intro">
-      {/* {this.state.mesh.numberOfFamilies} */}
-    </p>
-      <div className="circleCentral">
-        <div className="circle">
-          {this.state.mesh.numberOfFamilies} 
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <img src={meshdname} className="App-logo" alt="logo" />
+          <title>Meshblock Analysis</title>
+        </header>
+        <div className="centered">
+          <h1>Welcome to Mesh'd!</h1>
         </div>
-        <div className="circle">
-          {this.state.mesh.numberOfFamilies} 
+        <div className="centered margin-bottom-small">
+          To start, please enter a street address inside the search bar and
+          we will show you statistics about the house's mesh block.
         </div>
-        <div className="circle">
-          {this.state.mesh.numberOfFamilies} 
+       {this.renderData()}
+        <div className="mapCentral mapCentered">
+          <MapGL
+            ref={this.mapRef}
+            {...this.state.viewport}
+            onViewportChange={this._onViewportChange}
+            mapboxApiAccessToken={MAPBOX_TOKEN}
+          >
+            <Geocoder mapRef={this.mapRef} onViewportChange={this._onViewportChange} mapboxApiAccessToken={MAPBOX_TOKEN} />
+          </MapGL>
         </div>
-      </div>
-      <div className="mapCentral">
-        <MapGL
-          ref={this.mapRef}
-          {...this.state.viewport}
-          onViewportChange={this._onViewportChange}
-          mapboxApiAccessToken={MAPBOX_TOKEN}
-        >
-          <Geocoder mapRef={this.mapRef} onViewportChange={this._onViewportChange} mapboxApiAccessToken={MAPBOX_TOKEN} />
-        </MapGL>
-      </div>
-    </div>
+      </div >
     );
   }
 }
