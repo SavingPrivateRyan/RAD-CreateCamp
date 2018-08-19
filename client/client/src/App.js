@@ -1,7 +1,7 @@
 import 'mapbox-gl/dist/mapbox-gl.css';
 import React, { Component } from 'react';
 import './App.css';
-import MapGL from "react-map-gl";
+import MapGL, {Marker} from "react-map-gl";
 import Geocoder from "react-map-gl-geocoder";
 import logo from './logo.svg';
 import meshdname from './meshdname.svg';
@@ -43,8 +43,18 @@ class App extends Component {
       fetch('/mesh?lat=4&long=7')
       .then(res => res.json())
       .then(mesh => this.setState({ mesh }));
+
     }
   };
+
+  renderMarker() {
+    if (this.state.viewport.longitude > 172 & this.state.viewport.longitude < 180){
+    return (
+      <Marker longitude={this.state.viewport.longitude} latitude={this.state.viewport.latitude}offsetLeft={-20} offsetTop={-50}>
+        <div><img src={logo} width="100" height="50" /></div>
+      </Marker>
+    );}
+  }
 
   renderData() {
     if (Object.keys(this.state.mesh).length !== 0) {
@@ -102,11 +112,15 @@ class App extends Component {
         <div className="mapCentral mapCentered">
           <MapGL
             mapStyle = "mapbox://styles/mapbox/streets-v9"
+            perspectiveEnabled
             ref={this.mapRef}
             {...this.state.viewport}
             onViewportChange={this._onViewportChange}
             mapboxApiAccessToken={MAPBOX_TOKEN}
+            
           >
+                {this.renderMarker()}
+
             <Geocoder mapRef={this.mapRef} onViewportChange={this._onViewportChange} mapboxApiAccessToken={MAPBOX_TOKEN} />
           </MapGL>
         </div>
