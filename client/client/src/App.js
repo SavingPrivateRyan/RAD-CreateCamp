@@ -101,6 +101,7 @@ class App extends Component {
        {this.renderData()}
         <div className="mapCentral mapCentered">
           <MapGL
+            mapStyle = "mapbox://styles/mapbox/streets-v9"
             ref={this.mapRef}
             {...this.state.viewport}
             onViewportChange={this._onViewportChange}
